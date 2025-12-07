@@ -28,8 +28,13 @@ vec3 firstLight(0.0f, 0.0f, 0.0f);
 vec3 lightPos(0.0f, 0.0f, -2.5f);
 
 bool blinn = true;
+bool timeGoing = true;
+float lastTime = 0.0f;
 
-
+enum SpecialActions {
+	SOLAR_ECLIPSE,LUNAR_ECLIPSE,DEFAULT_MOVEMENT,START_MOVEMENT
+};
+SpecialActions action = DEFAULT_MOVEMENT;
 void processInput(GLFWwindow* window);
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -89,12 +94,16 @@ int main()
 	texturePaths.push_back("./textures/earth.jpeg");
 	texturePaths.push_back("./textures/mars.jpeg");
 	texturePaths.push_back("./textures/sun.jpeg");
+	texturePaths.push_back("./textures/moon.jpeg");
+
 	vector<GLuint> textures = loadTextures(texturePaths);
 	Model earthPlanet("./models/Sphere.glb");
 	Model marsPlanet("./models/Sphere.glb");
 	Model sun("./models/Sphere.glb");
+	Model moon("./models/Sphere.glb");
 
-	Cube LightSource(firstLight, 0.2f, vec3(1.0f, 1.0f, 1.0f));
+
+	//Cube LightSource(firstLight, 0.2f, vec3(1.0f, 1.0f, 1.0f));
 
 	bool BPressed = false;
 
@@ -106,6 +115,37 @@ int main()
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		float time = (float)glfwGetTime();
+
+		float speed = 364.25 * 24 * 60;
+		//float speed = 364.25 * 24 ;
+		// speed up from 1 year to 1 minute
+		// 364.25 -> 1 minute -> 
+		// moon: 30 days -> 0.082 minute -> 4.94 seconds
+		switch (action)
+		{
+		case SOLAR_ECLIPSE:
+			speed = speed;
+			break;
+		case LUNAR_ECLIPSE:
+			speed = speed;
+			break;
+		case START_MOVEMENT:
+			timeGoing = true;
+			action = DEFAULT_MOVEMENT;
+			break;
+		case DEFAULT_MOVEMENT:
+			break;
+		default:
+			break;
+		}
+		if (!timeGoing)
+		{
+			//glfwSetTime(lastTime);
+			time = lastTime;
+		}
+		lastTime = time;
+		
+		
 
 		processInput(window);
 
@@ -136,26 +176,73 @@ int main()
 		/*glBindTexture(GL_TEXTURE_2D, textures[0]);
 		plainBall.Draw(allShader);*/
 
-
-
-		mat4 transformation = mat4(1.0f);
-		transformation = glm::rotate(transformation,time,vec3(0.0f,1.0f,0.0f));
-		transformation = glm::translate(transformation, vec3(0.0f, 0.0f, 3.0f));
-		transformation = glm::scale(transformation, vec3(0.2f, 0.2f, 0.2f));
-
+		
+		
+		mat4 earthTrans = mat4(1.0f);
+		float earthRotationSpeed = 1.0f/(364.25*24*3600); // in 1 year
+		float theta = glm::radians(time) *360.0* earthRotationSpeed *speed;
+		float r = 2.0f;//least distance between earth and sun
+		float translateZ = r/2;
+		float x = r*cos(theta);
+		float z = 2 * r*sin(theta) + translateZ;
+		earthTrans = glm::translate(earthTrans, vec3(x, 0.0f, z));
+		earthTrans = glm::scale(earthTrans, vec3(0.2f, 0.2f, 0.2f));
+		float orbitInclination = glm::radians(0.0f); // moon orbit is tilted by 5 degree which 
+		//makes solar and lunar blab(i don't know what the word is) impossible to predict
+		mat4 moonTrans = glm::rotate(earthTrans, orbitInclination, vec3(1.0, 0.0, 0.0));
+		float moonRotationSpeed = 1.0f/(30*24*3600);
+		float t = glm::radians(time) * 360.0* moonRotationSpeed *speed;
+		moonTrans = glm::rotate(moonTrans, t, vec3(0.0, 1.0, 0.0));
+		float DME = 2.0f;//distance between moon and earth
+		moonTrans = glm::translate(moonTrans, vec3(DME, 0.0, 0.0));
+		moonTrans = glm::scale(moonTrans, vec3(0.6f, 0.6f, 0.6f));
 		
 
-		allShader.setMat4("model", transformation);
+		//sun moon earth pos 
+		glm::vec3 sunPos = glm::vec3(0, 0, 0);
+		glm::vec3 earthPos = glm::vec3(x, 0, z);
+		glm::vec3 moonPos = glm::vec3(moonTrans[3]);
+		glm::vec3 SM = glm::normalize(moonPos - sunPos);
+		glm::vec3 SE = glm::normalize(earthPos - sunPos);
+		//it's drewed in the image in the project why it's like this
+		float dotValue = glm::dot(SE, SM);
+		bool aligned = dotValue > 0.999f;
+		bool moonBetween = glm::length(moonPos - sunPos) < glm::length(earthPos - sunPos);
+		bool solar = aligned && moonBetween;
+		bool lunar = aligned && !moonBetween;
+		if(timeGoing)
+		{
+			std::cout << "Earth: "
+				<< earthPos.x << ", " << earthPos.y << ", " << earthPos.z << std::endl;
+
+			std::cout << "Moon:  "
+				<< moonPos.x << ", " << moonPos.y << ", " << moonPos.z << std::endl;
+
+			std::cout << "Dot:   " << dotValue << std::endl;
+
+			if (aligned)  std::cout << "Aligned: YES" << std::endl;
+			else          std::cout << "Aligned: NO" << std::endl;
+
+			if (solar)    std::cout << "Solar Eclipse" << std::endl;
+			if (lunar)    std::cout << "Lunar Eclipse" << std::endl;
+		}
+		if ((solar && action == SOLAR_ECLIPSE) || (lunar && action == LUNAR_ECLIPSE))
+			timeGoing = false;
+		allShader.setMat4("model", earthTrans);
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
+		earthPlanet.Draw(allShader);
+		allShader.setMat4("model", moonTrans);
+		glBindTexture(GL_TEXTURE_2D, textures[3]);
 		earthPlanet.Draw(allShader);
 
 
+		//LightSource Shader
 		lightSourceShader.use();
 		lightSourceShader.setMat4("projection", projection);
 		lightSourceShader.setMat4("view", view);
 		lightSourceShader.setVec3("objectColor", vec3(1.0f,1.0f,1.0f));
 		mat4 sunTransform = mat4(1.0f);
-		sunTransform = glm::scale(sunTransform, vec3(0.3f, 0.3f, 0.3f));
+		sunTransform = glm::scale(sunTransform, vec3(0.5f, 0.5f, 0.5f));
 		lightSourceShader.setMat4("model", sunTransform);
 		glBindTexture(GL_TEXTURE_2D, textures[2]);
 		sun.Draw(lightSourceShader);
@@ -181,6 +268,15 @@ void processInput(GLFWwindow* window)
 		camera.ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
+	//solar
+	if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
+		action = SOLAR_ECLIPSE;
+	//lunar
+	if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
+		action = LUNAR_ECLIPSE;
+	//move time
+	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+		action = START_MOVEMENT;
 }
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
