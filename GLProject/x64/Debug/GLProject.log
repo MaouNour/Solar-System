@@ -2,7 +2,7 @@
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(524,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   Scanning sources for module dependencies...
   ModelsMain.cpp
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(182,28): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(183,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(194,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(184,28): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(185,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(212,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   GLProject.vcxproj -> C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\x64\Debug\Lecture5.exe

@@ -85,6 +85,8 @@ int main()
 
 	Shader allShader("./shaders/vs/L5.vs", "./shaders/fs/L5-Multi.fs");
 	Shader lightSourceShader("./shaders/vs/LightSource.vs", "./shaders/fs/LightSource-Texture.fs");
+	//Shader lightSourceShader("./shaders/vs/L5.vs", "./shaders/fs/L5-Multi.fs");
+
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -187,8 +189,24 @@ int main()
 		float z = 2 * r*sin(theta) + translateZ;
 		earthTrans = glm::translate(earthTrans, vec3(x, 0.0f, z));
 		earthTrans = glm::scale(earthTrans, vec3(0.2f, 0.2f, 0.2f));
+		/*
+		it takes for Earth to complete one full rotation relative to distant fixed stars is 23 hours
+		, 56 minutes, and 4 seconds, a period known as a sidereal day
+		Source WikiPedia : https://en.wikipedia.org/wiki/Earth's_rotation
+		*/
+		float earthSelfRotationSpeed = 1.0f / ((23 * 3600) + 56 * 60 + 4);
+		//float earthSelfRotationSpeed = 1.0f / ((1000 * 3600) + 56 * 60 + 4 ); // imaginary to be able to track it
+		float spinSpeed = glm::radians(time) * 360.0f * earthSelfRotationSpeed * speed;
+		/*
+		Earth's orbital plane is known ... on the celestial sphere. It is denoted by the Greek letter Epsilon.
+		Earth currently has an axial tilt of about 23.44°
+		Source WikiPedia : https://en.wikipedia.org/wiki/Axial_tilt
+		*/
+		mat4 earthFinalRotation = glm::rotate(earthFinalRotation, glm::radians(23.44f), vec3(0.0f, 0.0f, 1.0f));
+		earthFinalRotation = glm::rotate(earthTrans, spinSpeed, vec3(0.0f, 1.0f, 0.0f));
 		float orbitInclination = glm::radians(0.0f); // moon orbit is tilted by 5 degree which 
 		//makes solar and lunar blab(i don't know what the word is) impossible to predict
+		//the word is eclipse i searched
 		mat4 moonTrans = glm::rotate(earthTrans, orbitInclination, vec3(1.0, 0.0, 0.0));
 		float moonRotationSpeed = 1.0f/(30*24*3600);
 		float t = glm::radians(time) * 360.0* moonRotationSpeed *speed;
@@ -210,7 +228,7 @@ int main()
 		bool moonBetween = glm::length(moonPos - sunPos) < glm::length(earthPos - sunPos);
 		bool solar = aligned && moonBetween;
 		bool lunar = aligned && !moonBetween;
-		if(timeGoing)
+		/*if(timeGoing)
 		{
 			std::cout << "Earth: "
 				<< earthPos.x << ", " << earthPos.y << ", " << earthPos.z << std::endl;
@@ -225,15 +243,15 @@ int main()
 
 			if (solar)    std::cout << "Solar Eclipse" << std::endl;
 			if (lunar)    std::cout << "Lunar Eclipse" << std::endl;
-		}
+		}*/
 		if ((solar && action == SOLAR_ECLIPSE) || (lunar && action == LUNAR_ECLIPSE))
 			timeGoing = false;
-		allShader.setMat4("model", earthTrans);
+		/*allShader.setMat4("model", earthFinalRotation);
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
 		earthPlanet.Draw(allShader);
 		allShader.setMat4("model", moonTrans);
 		glBindTexture(GL_TEXTURE_2D, textures[3]);
-		earthPlanet.Draw(allShader);
+		earthPlanet.Draw(allShader);*/
 
 
 		//LightSource Shader
@@ -246,6 +264,12 @@ int main()
 		lightSourceShader.setMat4("model", sunTransform);
 		glBindTexture(GL_TEXTURE_2D, textures[2]);
 		sun.Draw(lightSourceShader);
+		lightSourceShader.setMat4("model", earthFinalRotation);
+		glBindTexture(GL_TEXTURE_2D, textures[0]);
+		earthPlanet.Draw(lightSourceShader);
+		lightSourceShader.setMat4("model", moonTrans);
+		glBindTexture(GL_TEXTURE_2D, textures[3]);
+		earthPlanet.Draw(lightSourceShader);
 
 
 		glfwSwapBuffers(window);
