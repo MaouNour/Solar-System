@@ -244,8 +244,22 @@ int main()
 			if (solar)    std::cout << "Solar Eclipse" << std::endl;
 			if (lunar)    std::cout << "Lunar Eclipse" << std::endl;
 		}*/
-		if ((solar && action == SOLAR_ECLIPSE) || (lunar && action == LUNAR_ECLIPSE))
+		bool move = false;
+		if (solar && action == SOLAR_ECLIPSE)
+		{
 			timeGoing = false;
+			if(!move)
+			{
+				camera.Position = vec3(x, 0.0, z);
+				move = true;
+			}
+			
+
+		}
+		if (lunar && action == LUNAR_ECLIPSE) {
+			timeGoing = false;
+			
+		}
 		/*allShader.setMat4("model", earthFinalRotation);
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
 		earthPlanet.Draw(allShader);

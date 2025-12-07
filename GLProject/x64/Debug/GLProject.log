@@ -5,4 +5,5 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v17
 C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(184,28): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(185,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(212,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   GLProject.vcxproj -> C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\x64\Debug\Lecture5.exe
