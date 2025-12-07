@@ -5,5 +5,9 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v17
 C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(184,28): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(185,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(212,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  GLProject.vcxproj -> C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\x64\Debug\Lecture5.exe
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(266,12): error C2248: 'Camera::updateCameraVectors': cannot access private member declared in class 'Camera'
+      C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\OpenGL.SharedModule\dependencies\include\learnopengl\camera.h(117,10):
+      see declaration of 'Camera::updateCameraVectors'
+      C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\OpenGL.SharedModule\dependencies\include\learnopengl\camera.h(27,7):
+      see declaration of 'Camera'
+  

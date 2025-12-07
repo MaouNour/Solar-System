@@ -248,13 +248,7 @@ int main()
 		if (solar && action == SOLAR_ECLIPSE)
 		{
 			timeGoing = false;
-			if(!move)
-			{
-				camera.Position = vec3(x, 0.0, z);
-				move = true;
-			}
-			
-
+				
 		}
 		if (lunar && action == LUNAR_ECLIPSE) {
 			timeGoing = false;
