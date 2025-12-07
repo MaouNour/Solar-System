@@ -98,72 +98,100 @@ int main()
 
 	bool BPressed = false;
 
-	while (!glfwWindowShouldClose(window))
-	{
-		allShader.use();
-		allShader.setBool("blinn", true);
-		float currentFrame = static_cast<float>(glfwGetTime());
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
-		float time = (float)glfwGetTime();
+    float earthDist = 5.0f;
+    float moonDist = 1.0f;
+    float earthScale = 0.25f;
+    float moonScale = 0.08f; while (!glfwWindowShouldClose(window))
+    {
+      
+        allShader.use();
+        allShader.setBool("blinn", true);
+        float currentFrame = static_cast<float>(glfwGetTime());
+        deltaTime = currentFrame - lastFrame;
+        lastFrame = currentFrame;
+        float time = (float)glfwGetTime();
 
-		processInput(window);
+        processInput(window);
 
-		glClearColor(0.12f, 0.12f, 0.12f, 1.0f);
-		//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+     
+        glClearColor(0.12f, 0.12f, 0.12f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		mat4 projection = mat4(1.0f);
-		projection = perspective(radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-		allShader.setMat4("projection", projection);
-		
+      
+        mat4 projection = mat4(1.0f);
+        projection = perspective(radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        allShader.setMat4("projection", projection);
 
-		mat4 view = mat4(1.0f);
-		view = view = camera.GetViewMatrix();
-		allShader.setMat4("view", view);
+        mat4 view = mat4(1.0f);
+        view = camera.GetViewMatrix();
+        allShader.setMat4("view", view);
 
-		mat4 trans = mat4(1.0f);
-		trans = rotate(trans, time, vec3(1.0f, 0.0f, 1.0f));
-
-		/*vec4 rotatedVectorHomogeneous = trans * vec4(firstLight, 1.0f);
-		lightPos = vec3(rotatedVectorHomogeneous);*/
-
-		allShader.setVec3("lightPos", lightPos);
-		allShader.setVec3("viewPos", camera.Position);
-		allShader.setVec3("objectColor", vec3(1.0f, 1.0f, 1.0f));
-		allShader.setMat4("model", mat4(1.0f));
-
-		/*glBindTexture(GL_TEXTURE_2D, textures[0]);
-		plainBall.Draw(allShader);*/
+        vec3 lightPos(0.0f, 0.0f, 0.0f); 
+        allShader.setVec3("lightPos", lightPos);
+        allShader.setVec3("viewPos", camera.Position);
+        allShader.setVec3("objectColor", vec3(1.0f, 1.0f, 1.0f));
 
 
+        lightSourceShader.use();
+        lightSourceShader.setMat4("projection", projection);
+        lightSourceShader.setMat4("view", view);
 
-		mat4 transformation = mat4(1.0f);
-		transformation = glm::rotate(transformation,time,vec3(0.0f,1.0f,0.0f));
-		transformation = glm::translate(transformation, vec3(0.0f, 0.0f, 3.0f));
-		transformation = glm::scale(transformation, vec3(0.2f, 0.2f, 0.2f));
+        mat4 sunTransform = mat4(1.0f);
+        sunTransform = glm::scale(sunTransform, vec3(1.0f, 1.0f, 1.0f));
+        lightSourceShader.setMat4("model", sunTransform);
 
-		
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, textures[2]);
+        lightSourceShader.setInt("texture_diffuse1", 0);
+        sun.Draw(lightSourceShader);
 
-		allShader.setMat4("model", transformation);
-		glBindTexture(GL_TEXTURE_2D, textures[0]);
-		earthPlanet.Draw(allShader);
+        
+        allShader.use();
+
+        float earthSpeed = 0.5f;
+        float earthRotationSpeed = 1.0f;
+        float theta = time * earthSpeed;
+
+       
+        float earthX = earthDist * cos(theta);
+        float earthZ = (earthDist * 1.5f) * sin(theta);
+
+        mat4 modelEarth = mat4(1.0f);
+        modelEarth = glm::translate(modelEarth, vec3(earthX, 0.0f, earthZ)); 
+        modelEarth = glm::rotate(modelEarth, time * earthRotationSpeed, vec3(0.0f, 1.0f, 0.0f));
+
+      
+        mat4 earthCenter = modelEarth;
+
+        modelEarth = glm::scale(modelEarth, vec3(earthScale));
+
+        allShader.setMat4("model", modelEarth);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, textures[0]); 
+        allShader.setInt("texture_diffuse1", 0);
+        earthPlanet.Draw(allShader);
 
 
-		lightSourceShader.use();
-		lightSourceShader.setMat4("projection", projection);
-		lightSourceShader.setMat4("view", view);
-		lightSourceShader.setVec3("objectColor", vec3(1.0f,1.0f,1.0f));
-		mat4 sunTransform = mat4(1.0f);
-		sunTransform = glm::scale(sunTransform, vec3(0.3f, 0.3f, 0.3f));
-		lightSourceShader.setMat4("model", sunTransform);
-		glBindTexture(GL_TEXTURE_2D, textures[2]);
-		sun.Draw(lightSourceShader);
+        mat4 modelMoon = earthCenter;
+        float moonSpeed = 2.0f;
+        float moonTheta = time * moonSpeed;
+
+       
+        modelMoon = glm::translate(modelMoon, vec3(moonDist * cos(moonTheta), 0.0f, moonDist * sin(moonTheta)));
+        modelMoon = glm::scale(modelMoon, vec3(moonScale));
+
+        allShader.setMat4("model", modelMoon);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, textures[1]); 
+        allShader.setInt("texture_diffuse1", 0);
+        marsPlanet.Draw(allShader);
 
 
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-	}
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
 
 	glfwTerminate();
 	return 0;
