@@ -10,6 +10,26 @@ class Polygon {
 public:
 	Polygon(std::vector<glm::vec3> v, glm::vec3 c);
 	void transformation(glm::mat4 t);
+	void setDrawMode(GLenum drawingMode);
+	virtual void draw(Shader& shader);
+	virtual ~Polygon() = default;
+	virtual void drawc(Shader& shader);
+	void deleteBuffers();
+	std::vector<glm::vec3> getVertices();
+protected:
+	glm::vec3 head;
+	std::vector<glm::vec3> vertices;
+	glm::vec3 color;
+	glm::mat4 model;
+	GLuint VAO;
+	GLuint VBO;
+	GLenum drawingMode = GL_TRIANGLE_FAN;
+	Polygon();
+};
+/*
+public:
+	Polygon(std::vector<glm::vec3> v, glm::vec3 c);
+	void transformation(glm::mat4 t);
 	void draw(Shader& shader);
 	void deleteBuffers();
 
@@ -20,11 +40,8 @@ private:
 	glm::mat4 model;
 	GLuint VAO;
 
-protected:
-	Polygon();
-};
-
-class PolygonWithTexture {
+*/
+class PolygonWithTexture : public Polygon{
 public:
 	PolygonWithTexture(std::vector<glm::vec3> v, std::vector<glm::vec2> t, glm::vec3 c = glm::vec3(1.0f, 1.0f, 1.0f));
 	void transformation(glm::mat4 t);

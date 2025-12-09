@@ -91,7 +91,16 @@ int main()
 	glEnable(GL_DEPTH_TEST);
 
 	stbi_set_flip_vertically_on_load(true);
-
+#pragma region Lightings
+	vec3 pointLightPositions[] = {
+	glm::vec3(0.0f, 0.0f, 0.0f),
+	glm::vec3(0.0f, 0.0f, 0.0f)
+	};
+	glm::vec3 pointLightColors[] = {
+	glm::vec3(1.0f, 1.0f, 1.0f),
+	glm::vec3(0.2f, 0.2f, 0.2f)
+	};
+#pragma endregion
 	vector<string> texturePaths = {};
 	texturePaths.push_back("./textures/earth.jpeg");
 	texturePaths.push_back("./textures/mars.jpeg");
@@ -105,7 +114,7 @@ int main()
 	Model moon("./models/Sphere.glb");
 
 
-	//Cube LightSource(firstLight, 0.2f, vec3(1.0f, 1.0f, 1.0f));
+	//Cube LightSource(vec3(0.0,0.0,0.0), 0.2f, vec3(1.0f, 1.0f, 1.0f));
 
 	bool BPressed = false;
 
@@ -133,6 +142,7 @@ int main()
 			break;
 		case START_MOVEMENT:
 			timeGoing = true;
+			glfwSetTime(lastTime);
 			action = DEFAULT_MOVEMENT;
 			break;
 		case DEFAULT_MOVEMENT:
@@ -170,13 +180,14 @@ int main()
 		/*vec4 rotatedVectorHomogeneous = trans * vec4(firstLight, 1.0f);
 		lightPos = vec3(rotatedVectorHomogeneous);*/
 
-		allShader.setVec3("lightPos", lightPos);
+		//allShader.setVec3("lightPos", lightPos);
 		allShader.setVec3("viewPos", camera.Position);
 		allShader.setVec3("objectColor", vec3(1.0f, 1.0f, 1.0f));
 		allShader.setMat4("model", mat4(1.0f));
 
 		/*glBindTexture(GL_TEXTURE_2D, textures[0]);
 		plainBall.Draw(allShader);*/
+		
 
 		
 		
@@ -202,8 +213,8 @@ int main()
 		Earth currently has an axial tilt of about 23.44°
 		Source WikiPedia : https://en.wikipedia.org/wiki/Axial_tilt
 		*/
-		mat4 earthFinalRotation = glm::rotate(earthFinalRotation, glm::radians(23.44f), vec3(0.0f, 0.0f, 1.0f));
-		earthFinalRotation = glm::rotate(earthTrans, spinSpeed, vec3(0.0f, 1.0f, 0.0f));
+		mat4 earthFinalRotation = glm::rotate(earthTrans, glm::radians(23.44f), vec3(0.0f, 0.0f, 1.0f));
+		earthFinalRotation = glm::rotate(earthFinalRotation, spinSpeed, vec3(0.0f, 1.0f, 0.0f));
 		float orbitInclination = glm::radians(0.0f); // moon orbit is tilted by 5 degree which 
 		//makes solar and lunar blab(i don't know what the word is) impossible to predict
 		//the word is eclipse i searched
@@ -224,7 +235,7 @@ int main()
 		glm::vec3 SE = glm::normalize(earthPos - sunPos);
 		//it's drewed in the image in the project why it's like this
 		float dotValue = glm::dot(SE, SM);
-		bool aligned = dotValue > 0.999f;
+		bool aligned = dotValue > 0.999999f;
 		bool moonBetween = glm::length(moonPos - sunPos) < glm::length(earthPos - sunPos);
 		bool solar = aligned && moonBetween;
 		bool lunar = aligned && !moonBetween;
@@ -254,14 +265,32 @@ int main()
 			timeGoing = false;
 			
 		}
-		/*allShader.setMat4("model", earthFinalRotation);
+		pointLightPositions[1] = moonPos;
+#pragma region Light Settings
+				// Point light 1
+				allShader.setVec3("pointLights[0].position", pointLightPositions[0]);
+				allShader.setVec3("pointLights[0].ambient", pointLightColors[0].x * 0.1f, pointLightColors[0].y * 0.1f, pointLightColors[0].z * 0.1f);
+				allShader.setVec3("pointLights[0].diffuse", pointLightColors[0].x, pointLightColors[0].y, pointLightColors[0].z);
+				allShader.setVec3("pointLights[0].specular", pointLightColors[0].x, pointLightColors[0].y, pointLightColors[0].z);
+				allShader.setFloat("pointLights[0].constant", 1.0f);
+				allShader.setFloat("pointLights[0].linear", 0.14f);
+				allShader.setFloat("pointLights[0].quadratic", 0.07f);
+				// Point light 2
+				allShader.setVec3("pointLights[1].position", pointLightPositions[1]);
+				allShader.setVec3("pointLights[1].ambient", pointLightColors[1].x * 0.0f, pointLightColors[1].y * 0.0f, pointLightColors[1].z * 0.0f);
+				allShader.setVec3("pointLights[1].diffuse", pointLightColors[1].x, pointLightColors[1].y, pointLightColors[1].z);
+				allShader.setVec3("pointLights[1].specular", pointLightColors[1].x *1.5 , pointLightColors[1].y *1.5, pointLightColors[1].z *1.5);
+				allShader.setFloat("pointLights[1].constant", 1.0f);
+				allShader.setFloat("pointLights[1].linear", 0.14f);
+				allShader.setFloat("pointLights[1].quadratic", 0.07f);
+		#pragma endregion
+
+		allShader.setMat4("model", earthFinalRotation);
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
 		earthPlanet.Draw(allShader);
 		allShader.setMat4("model", moonTrans);
 		glBindTexture(GL_TEXTURE_2D, textures[3]);
-		earthPlanet.Draw(allShader);*/
-
-
+		earthPlanet.Draw(allShader);
 		//LightSource Shader
 		lightSourceShader.use();
 		lightSourceShader.setMat4("projection", projection);
@@ -272,12 +301,13 @@ int main()
 		lightSourceShader.setMat4("model", sunTransform);
 		glBindTexture(GL_TEXTURE_2D, textures[2]);
 		sun.Draw(lightSourceShader);
-		lightSourceShader.setMat4("model", earthFinalRotation);
+		//LightSource.draw(lightSourceShader);
+		/*lightSourceShader.setMat4("model", earthFinalRotation);
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
 		earthPlanet.Draw(lightSourceShader);
 		lightSourceShader.setMat4("model", moonTrans);
 		glBindTexture(GL_TEXTURE_2D, textures[3]);
-		earthPlanet.Draw(lightSourceShader);
+		earthPlanet.Draw(lightSourceShader);*/
 
 
 		glfwSwapBuffers(window);

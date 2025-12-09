@@ -39,6 +39,18 @@
     <ClCompile Include="tools\Polygon.cpp">
       <Filter>Source Files\tools</Filter>
     </ClCompile>
+    <ClCompile Include="tools\MyPoly.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\Polygon3d.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\Shapes.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\Orbit.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\fs\L5.fs">
@@ -63,6 +75,12 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="LightSource-Texture.fs">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="shaders\fs\HW-model.fs">
+      <Filter>Source Files\shaders</Filter>
+    </None>
+    <None Include="model-blinn.fs">
       <Filter>Source Files\shaders</Filter>
     </None>
   </ItemGroup>

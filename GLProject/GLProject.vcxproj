@@ -133,7 +133,11 @@
     <ClCompile Include="MultilightMain.cpp" />
     <ClCompile Include="PrimitivesMain.cpp" />
     <ClCompile Include="tools\Cube.cpp" />
+    <ClCompile Include="tools\MyPoly.cpp" />
+    <ClCompile Include="tools\Orbit.cpp" />
     <ClCompile Include="tools\Polygon.cpp" />
+    <ClCompile Include="tools\Polygon3d.cpp" />
+    <ClCompile Include="tools\Shapes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenGL.SharedModule\OpenGL.SharedModule.vcxproj">
@@ -143,6 +147,8 @@
   <ItemGroup>
     <None Include="..\..\..\Sphere.glb" />
     <None Include="LightSource-Texture.fs" />
+    <None Include="model-blinn.fs" />
+    <None Include="shaders\fs\HW-model.fs" />
     <None Include="shaders\fs\L5-Model.fs" />
     <None Include="shaders\fs\L5-Multi.fs" />
     <None Include="shaders\fs\L5.fs" />

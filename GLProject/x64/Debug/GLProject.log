@@ -1,13 +1,22 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(523,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(524,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   Scanning sources for module dependencies...
-  ModelsMain.cpp
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(184,28): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(185,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(212,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(266,12): error C2248: 'Camera::updateCameraVectors': cannot access private member declared in class 'Camera'
-      C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\OpenGL.SharedModule\dependencies\include\learnopengl\camera.h(117,10):
-      see declaration of 'Camera::updateCameraVectors'
-      C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\OpenGL.SharedModule\dependencies\include\learnopengl\camera.h(27,7):
-      see declaration of 'Camera'
+  MyPoly.cpp
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\MyPoly.cpp(16,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\MyPoly.cpp(31,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Orbit.cpp
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\MyPoly.cpp(16,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'tools/Orbit.cpp')
   
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\MyPoly.cpp(31,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'tools/Orbit.cpp')
+  
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Orbit.cpp(16,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Polygon.cpp
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Polygon.cpp(43,45): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Polygon.cpp(48,45): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Polygon.cpp(107,51): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Polygon3d.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  GLProject.vcxproj -> C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\x64\Debug\Lecture5.exe
