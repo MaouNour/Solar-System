@@ -35,13 +35,13 @@ public:
 		}
 		return circleUV;
 	}
-	static std::vector<glm::vec3> makeCircle(int numberOfPoints,float r) {
+	static std::vector<glm::vec3> makeCircle(int numberOfPoints,float r , glm::vec3 axis = glm::vec3(0.0f,1.0f,0.0f)) {
 		std::vector<glm::vec3> circle = {};
 		int step = 360 / numberOfPoints;
 		float pi = glm::pi<float>();
 		for (int i = 0; i < 360; i+=step) {
 			float rad = i * pi/ 180.0;
-			circle.push_back(glm::vec3(r*cos(rad),r*sin(rad),0.0));
+			circle.push_back(glm::vec3(r*cos(rad),r*sin(rad) * axis.y,r*sin(rad)*axis.z));
 		}
 		return circle;
 	}
@@ -75,16 +75,17 @@ public:
 		std::vector<glm::vec3> result = { rect.at(3),rect.at(0),triangle.at(2),triangle.at(0),triangle.at(1),rect.at(1),rect.at(2) };
 		return move(result, glm::vec3(0.0f,heightRect/2.0,0.0f));
 	}
-	static std::vector<glm::vec3> makeEllipse(float width, float height , int points) {
+	static std::vector<glm::vec3> makeEllipse(float width, float height , int points , glm::vec3 center=glm::vec3(0.0,0.0,0.0)) {
 		float a = width / 2;
 		float b = height / 2;
 		int step = 360 / points;
 		std::vector<glm::vec3> ellipse = {};
 		for (float i = 0; i < 360; i+=step)
 		{
-			float x = a * cos(i);
-			float y = b * sin(i);
-			ellipse.push_back(glm::vec3(a * cos(glm::radians(i)), b * sin(glm::radians(i)), 0.0));
+			float x = a * cos(glm::radians(i)) + center.x;
+			float z = b * sin(glm::radians(i)) + center.z;
+			ellipse.push_back(glm::vec3(x, center.y, z));
+			//ellipse.push_back(glm::vec3(a * cos(glm::radians(i)), b * sin(glm::radians(i)), 0.0));
 		}
 		return ellipse;
 	}

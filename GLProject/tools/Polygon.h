@@ -14,6 +14,7 @@ public:
 	virtual void draw(Shader& shader);
 	virtual ~Polygon() = default;
 	virtual void drawc(Shader& shader);
+	void setColor(glm::vec3 color);
 	void deleteBuffers();
 	std::vector<glm::vec3> getVertices();
 protected:

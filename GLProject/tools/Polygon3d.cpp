@@ -14,6 +14,11 @@ enum ColorMode
 	TEXTURE_VECTOR
 };
 class Polygon3d {
+public :
+	Polygon3d(std::vector<std::shared_ptr<Polygon>> polygons) {
+		init(polygons);
+	};
+	Polygon3d() {};
 private:
 	
 protected:
@@ -27,7 +32,12 @@ protected:
 	GLenum drawingMode = GL_TRIANGLE_FAN;
 	std::vector<const char*> tex;
 	std::vector<glm::vec2> TexCoords;
-	Polygon3d() {};
+	
+	
+
+	void init(std::vector<std::shared_ptr<Polygon>> polygons) {
+		this->polygons = polygons;
+	}
 	void init(std::vector<glm::vec3> vertices, std::vector<int> numberOfVerticesInFace, std::vector<int> faces) {
 		init(vertices, numberOfVerticesInFace, faces, colorMode);
 	}

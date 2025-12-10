@@ -9,6 +9,8 @@
 #include <learnopengl/camera.h>
 #include <learnopengl/model.h>
 #include "stb_image.h"
+#include "tools/Orbit.cpp"
+#include "tools/Shapes.cpp"
 
 using namespace std;
 using namespace glm;
@@ -112,7 +114,13 @@ int main()
 	Model marsPlanet("./models/Sphere.glb");
 	Model sun("./models/Sphere.glb");
 	Model moon("./models/Sphere.glb");
-
+	float r = 4.0f;
+	float translateZ = 1.0f;
+	Orbit earthOrbit(Shapes::makeEllipse(r, 2 * r, 32, glm::vec3(0.0, 0.0, translateZ)), 0.01, 0.01);
+	earthOrbit.setColor(glm::vec3(0.0,0.0,0.3));
+	float DME = 0.4f;
+	Orbit moonOrbit(Shapes::makeCircle(32,DME,vec3(0.0,0.0,1.0)),0.01,0.01);
+	moonOrbit.setColor(vec3(0.9f, 0.9f, 0.9f));
 
 	//Cube LightSource(vec3(0.0,0.0,0.0), 0.2f, vec3(1.0f, 1.0f, 1.0f));
 
@@ -218,6 +226,9 @@ int main()
 		float orbitInclination = glm::radians(0.0f); // moon orbit is tilted by 5 degree which 
 		//makes solar and lunar blab(i don't know what the word is) impossible to predict
 		//the word is eclipse i searched
+		moonOrbit.resetTransformation();
+		moonOrbit.translate(vec3(x,0.0f,z));
+		
 		mat4 moonTrans = glm::rotate(earthTrans, orbitInclination, vec3(1.0, 0.0, 0.0));
 		float moonRotationSpeed = 1.0f/(30*24*3600);
 		float t = glm::radians(time) * 360.0* moonRotationSpeed *speed;
@@ -301,6 +312,8 @@ int main()
 		lightSourceShader.setMat4("model", sunTransform);
 		glBindTexture(GL_TEXTURE_2D, textures[2]);
 		sun.Draw(lightSourceShader);
+		earthOrbit.draw(lightSourceShader);
+		moonOrbit.draw(lightSourceShader);
 		//LightSource.draw(lightSourceShader);
 		/*lightSourceShader.setMat4("model", earthFinalRotation);
 		glBindTexture(GL_TEXTURE_2D, textures[0]);

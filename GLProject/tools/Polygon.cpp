@@ -51,6 +51,9 @@
 		glDeleteVertexArrays(1, &VAO);
 		//glDeleteBuffers(1, &VBO);
 	}
+	void Polygon::setColor(glm::vec3 color) {
+		this->color = color;
+	}
 	std::vector<glm::vec3> Polygon::getVertices() {
 		return this->vertices;
 	}

@@ -9,7 +9,7 @@
 
 class MyPoly :public Polygon3d {
 public:
-	MyPoly(std::vector<glm::vec3> v, float depth, ColorMode colorMode = COLOR,std::vector<glm::vec2> TexCoords = {}, std::vector<const char*> texVector = {},std::vector<glm::vec3> colorVector = {}) {
+	MyPoly(std::vector<glm::vec3> v, float depth,glm::vec3 axis, ColorMode colorMode = COLOR,std::vector<glm::vec2> TexCoords = {}, std::vector<const char*> texVector = {},std::vector<glm::vec3> colorVector = {}) {
 		this->vertices = v;
 		this->tex = texVector;
 		this->colorVector = colorVector;
@@ -18,7 +18,8 @@ public:
 		std::vector<int> numberOfVerticesInFace = {};
 		for (int i = 0; i < currsize; i++)
 		{
-			vertices.push_back(glm::vec3(vertices.at(i).x, vertices.at(i).y,depth));
+			
+			vertices.push_back(glm::vec3(vertices.at(i).x + axis.x*depth, vertices.at(i).y + axis.y*depth,vertices.at(i).z + axis.z*depth));
 		}
 		//make front and back faces
 		for (int i = 0; i < vertices.size(); i++)

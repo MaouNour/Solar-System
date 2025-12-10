@@ -1,22 +1,40 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(523,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(524,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   Scanning sources for module dependencies...
-  MyPoly.cpp
+  ModelsMain.cpp
 C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\MyPoly.cpp(16,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\MyPoly.cpp(31,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Orbit.cpp
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\MyPoly.cpp(16,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  (compiling source file 'tools/Orbit.cpp')
+  (compiling source file 'ModelsMain.cpp')
   
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\MyPoly.cpp(31,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  (compiling source file 'tools/Orbit.cpp')
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\MyPoly.cpp(32,12): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'ModelsMain.cpp')
   
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Orbit.cpp(16,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Polygon.cpp
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Polygon.cpp(43,45): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Polygon.cpp(48,45): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Polygon.cpp(107,51): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  Polygon3d.cpp
-  Generating Code...
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Helper.cpp(20,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'ModelsMain.cpp')
+  
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Orbit.cpp(19,16): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'ModelsMain.cpp')
+  
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Shapes.cpp(33,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'ModelsMain.cpp')
+  
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Shapes.cpp(43,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'ModelsMain.cpp')
+  
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Shapes.cpp(64,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'ModelsMain.cpp')
+  
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Shapes.cpp(71,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'ModelsMain.cpp')
+  
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(119,93): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(119,87): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(122,68): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(122,63): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(203,28): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(204,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(234,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(293,129): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(293,101): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(293,72): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   GLProject.vcxproj -> C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\x64\Debug\Lecture5.exe

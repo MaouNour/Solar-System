@@ -133,6 +133,7 @@
     <ClCompile Include="MultilightMain.cpp" />
     <ClCompile Include="PrimitivesMain.cpp" />
     <ClCompile Include="tools\Cube.cpp" />
+    <ClCompile Include="tools\Helper.cpp" />
     <ClCompile Include="tools\MyPoly.cpp" />
     <ClCompile Include="tools\Orbit.cpp" />
     <ClCompile Include="tools\Polygon.cpp" />
