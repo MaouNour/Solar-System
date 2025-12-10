@@ -32,6 +32,7 @@ vec3 lightPos(0.0f, 0.0f, -2.5f);
 bool blinn = true;
 bool timeGoing = true;
 float lastTime = 0.0f;
+float simulationTime = 0.0f;
 
 enum SpecialActions {
 	SOLAR_ECLIPSE,LUNAR_ECLIPSE,DEFAULT_MOVEMENT,START_MOVEMENT
@@ -82,7 +83,7 @@ int main()
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-	glfwSwapInterval(1);
+	//glfwSwapInterval(1);
 
 
 	Shader allShader("./shaders/vs/L5.vs", "./shaders/fs/L5-Multi.fs");
@@ -134,23 +135,23 @@ int main()
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		float time = (float)glfwGetTime();
-
-		float speed = 364.25 * 24 * 60;
-		//float speed = 364.25 * 24 ;
+		float timeSpeed = 1.0;
+		float speed = 364.25 * 24 * 30; // 2 minutes
+		//float speed = 364.25 * 24 * 60  ;
 		// speed up from 1 year to 1 minute
 		// 364.25 -> 1 minute -> 
 		// moon: 30 days -> 0.082 minute -> 4.94 seconds
+		processInput(window);
 		switch (action)
 		{
 		case SOLAR_ECLIPSE:
-			speed = speed;
+			timeSpeed = 10 * timeSpeed;
 			break;
 		case LUNAR_ECLIPSE:
-			speed = speed;
+			timeSpeed = 10 * timeSpeed;
 			break;
 		case START_MOVEMENT:
 			timeGoing = true;
-			glfwSetTime(lastTime);
 			action = DEFAULT_MOVEMENT;
 			break;
 		case DEFAULT_MOVEMENT:
@@ -158,21 +159,13 @@ int main()
 		default:
 			break;
 		}
-		if (!timeGoing)
-		{
-			//glfwSetTime(lastTime);
-			time = lastTime;
-		}
-		lastTime = time;
 		
 		
 
-		processInput(window);
 
 		glClearColor(0.12f, 0.12f, 0.12f, 1.0f);
 		//glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 		mat4 projection = mat4(1.0f);
 		projection = perspective(radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		allShader.setMat4("projection", projection);
@@ -182,6 +175,7 @@ int main()
 		view = view = camera.GetViewMatrix();
 		allShader.setMat4("view", view);
 
+		
 		mat4 trans = mat4(1.0f);
 		trans = rotate(trans, time, vec3(1.0f, 0.0f, 1.0f));
 
@@ -197,11 +191,12 @@ int main()
 		plainBall.Draw(allShader);*/
 		
 
-		
+		if (timeGoing)
+			simulationTime += deltaTime * timeSpeed;
 		
 		mat4 earthTrans = mat4(1.0f);
 		float earthRotationSpeed = 1.0f/(364.25*24*3600); // in 1 year
-		float theta = glm::radians(time) *360.0* earthRotationSpeed *speed;
+		float theta = glm::radians(simulationTime) *360.0* earthRotationSpeed *speed;
 		float r = 2.0f;//least distance between earth and sun
 		float translateZ = r/2;
 		float x = r*cos(theta);
@@ -215,7 +210,7 @@ int main()
 		*/
 		float earthSelfRotationSpeed = 1.0f / ((23 * 3600) + 56 * 60 + 4);
 		//float earthSelfRotationSpeed = 1.0f / ((1000 * 3600) + 56 * 60 + 4 ); // imaginary to be able to track it
-		float spinSpeed = glm::radians(time) * 360.0f * earthSelfRotationSpeed * speed;
+		float spinSpeed = glm::radians(simulationTime) * 360.0f * earthSelfRotationSpeed * speed;
 		/*
 		Earth's orbital plane is known ... on the celestial sphere. It is denoted by the Greek letter Epsilon.
 		Earth currently has an axial tilt of about 23.44°
@@ -231,7 +226,7 @@ int main()
 		
 		mat4 moonTrans = glm::rotate(earthTrans, orbitInclination, vec3(1.0, 0.0, 0.0));
 		float moonRotationSpeed = 1.0f/(30*24*3600);
-		float t = glm::radians(time) * 360.0* moonRotationSpeed *speed;
+		float t = glm::radians(simulationTime) * 360.0* moonRotationSpeed *speed;
 		moonTrans = glm::rotate(moonTrans, t, vec3(0.0, 1.0, 0.0));
 		float DME = 2.0f;//distance between moon and earth
 		moonTrans = glm::translate(moonTrans, vec3(DME, 0.0, 0.0));
@@ -269,12 +264,14 @@ int main()
 		bool move = false;
 		if (solar && action == SOLAR_ECLIPSE)
 		{
+			if(timeGoing)
+				std::cout << "SOLAR_ECLIPSE";
 			timeGoing = false;
-				
 		}
 		if (lunar && action == LUNAR_ECLIPSE) {
+			if (timeGoing)
+				std::cout << "LUNAR_ECLIPSE";
 			timeGoing = false;
-			
 		}
 		pointLightPositions[1] = moonPos;
 #pragma region Light Settings
@@ -302,7 +299,7 @@ int main()
 		{
 			allShader.setBool("shadowNumber", 1);
 			if(timeGoing)
-			std::cout << "shadow earth";
+			std::cout << "SOLAR_ECLIPSE";
 		}
 		else
 			allShader.setBool("shadowNumber", 0);
@@ -313,7 +310,7 @@ int main()
 		{
 			allShader.setBool("shadowNumber", 1);
 			if (timeGoing)
-				std::cout << "shadow moon";
+				std::cout << "LUNAR_ECLIPSE";
 		}
 		else
 			allShader.setBool("shadowNumber", 0);
