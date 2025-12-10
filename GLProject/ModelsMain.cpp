@@ -298,10 +298,28 @@ int main()
 
 		allShader.setMat4("model", earthFinalRotation);
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
+		if (solar) 
+		{
+			allShader.setBool("shadowNumber", 1);
+			if(timeGoing)
+			std::cout << "shadow earth";
+		}
+		else
+			allShader.setBool("shadowNumber", 0);
 		earthPlanet.Draw(allShader);
 		allShader.setMat4("model", moonTrans);
 		glBindTexture(GL_TEXTURE_2D, textures[3]);
-		earthPlanet.Draw(allShader);
+		if (lunar) 
+		{
+			allShader.setBool("shadowNumber", 1);
+			if (timeGoing)
+				std::cout << "shadow moon";
+		}
+		else
+			allShader.setBool("shadowNumber", 0);
+		moon.Draw(allShader);
+
+
 		//LightSource Shader
 		lightSourceShader.use();
 		lightSourceShader.setMat4("projection", projection);
@@ -312,6 +330,7 @@ int main()
 		lightSourceShader.setMat4("model", sunTransform);
 		glBindTexture(GL_TEXTURE_2D, textures[2]);
 		sun.Draw(lightSourceShader);
+		
 		earthOrbit.draw(lightSourceShader);
 		moonOrbit.draw(lightSourceShader);
 		//LightSource.draw(lightSourceShader);

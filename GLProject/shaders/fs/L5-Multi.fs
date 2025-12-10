@@ -52,11 +52,12 @@ uniform vec3 viewPos;
 //uniform DirLight dirLight;
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 uniform bool blinn;
+uniform int shadowNumber;
 //uniform SpotLight spotLight;
 
 // function prototypes
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec3 color);
-vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 color);
+vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 color,int i);
 vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 color);
 
 void main()
@@ -79,10 +80,12 @@ void main()
     // phase 2: point lights
     vec3 result = vec3(0.0,0.0,0.0);
     for(int i = 0; i < NR_POINT_LIGHTS; i++)
-        result += CalcPointLight(pointLights[i], norm, fragPos, viewDir, color);    
+        result += CalcPointLight(pointLights[i], norm, fragPos, viewDir, color,i);    
     // phase 3: spot light
     //result += CalcSpotLight(spotLight, norm, fragPos, viewDir, color);    
-    
+    //if(shadow)
+    //FragColor = vec4(vec3(0.0,0.0,0.0), 1.0);
+    //else
     FragColor = vec4(result, 1.0);
 }
 
@@ -111,11 +114,11 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec3 color)
     vec3 ambient = light.ambient * color;
     vec3 diffuse = light.diffuse * diff * color;
     vec3 specular = light.specular * spec * color;
+    
     return (ambient + diffuse + specular);
 }
-
 // calculates the color when using a point light.
-vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 color)
+vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 color,int i)
 {
     vec3 lightDir = normalize(light.position - fragPos);
     // diffuse shading
@@ -141,6 +144,9 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, v
     ambient *= attenuation;
     diffuse *= attenuation;
     specular *= attenuation;
+    if(i+1 == shadowNumber){
+        return (ambient);
+    }
     return (ambient + diffuse + specular);
 }
 
