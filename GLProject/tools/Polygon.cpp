@@ -2,7 +2,10 @@
 #include <glm/glm.hpp>
 #include <learnopengl/shader_m.h>
 #include <vector>
-
+	/*
+	*I edited the Polygon class using my own from the Clock homework named (Hours-Scorpion repo)
+	* just so i can use Polgon3d and other classes as is
+	*/
 	Polygon::Polygon(std::vector<glm::vec3> v, glm::vec3 c) {
 		vertices = v;
 		head = v.at(0);

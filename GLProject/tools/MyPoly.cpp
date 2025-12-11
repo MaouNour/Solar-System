@@ -6,7 +6,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
+/*
+* took it from Hours-Scorpion as is no edit here
+* will be used for the orbit 
+* will be discarded later and used in Helper.cpp for extrude 
+*/
 class MyPoly :public Polygon3d {
 public:
 	MyPoly(std::vector<glm::vec3> v, float depth,glm::vec3 axis, ColorMode colorMode = COLOR,std::vector<glm::vec2> TexCoords = {}, std::vector<const char*> texVector = {},std::vector<glm::vec3> colorVector = {}) {
@@ -33,10 +37,10 @@ public:
 		for (int i = 0; i < currsize; i++)
 		{
 			int next = (i + 1) % currsize; // wraps around for the last vertex
-			faces.push_back(i);           // front i
-			faces.push_back(next);        // front next
-			faces.push_back(next + currsize);    // back next
-			faces.push_back(i + currsize);       // back i
+			faces.push_back(i);           
+			faces.push_back(next);        
+			faces.push_back(next + currsize);    
+			faces.push_back(i + currsize);       
 			numberOfVerticesInFace.push_back(4);
 		}
 		if (!tex.empty() && !TexCoords.empty())

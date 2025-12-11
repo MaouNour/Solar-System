@@ -218,9 +218,13 @@ int main()
 		*/
 		mat4 earthFinalRotation = glm::rotate(earthTrans, glm::radians(23.44f), vec3(0.0f, 0.0f, 1.0f));
 		earthFinalRotation = glm::rotate(earthFinalRotation, spinSpeed, vec3(0.0f, 1.0f, 0.0f));
-		float orbitInclination = glm::radians(0.0f); // moon orbit is tilted by 5 degree which 
+		float orbitInclination = glm::radians(0.0f); 
+		//orbitInclination = glm::radians(5.0f);
+		// moon orbit is tilted by 5 degree which 
 		//makes solar and lunar blab(i don't know what the word is) impossible to predict
 		//the word is eclipse i searched
+		// i won't put the 5 degree here because it will make the simulation almost impossible to happen 
+		// it will still happen though once a year or so.
 		moonOrbit.resetTransformation();
 		moonOrbit.translate(vec3(x,0.0f,z));
 		
@@ -245,22 +249,6 @@ int main()
 		bool moonBetween = glm::length(moonPos - sunPos) < glm::length(earthPos - sunPos);
 		bool solar = aligned && moonBetween;
 		bool lunar = aligned && !moonBetween;
-		/*if(timeGoing)
-		{
-			std::cout << "Earth: "
-				<< earthPos.x << ", " << earthPos.y << ", " << earthPos.z << std::endl;
-
-			std::cout << "Moon:  "
-				<< moonPos.x << ", " << moonPos.y << ", " << moonPos.z << std::endl;
-
-			std::cout << "Dot:   " << dotValue << std::endl;
-
-			if (aligned)  std::cout << "Aligned: YES" << std::endl;
-			else          std::cout << "Aligned: NO" << std::endl;
-
-			if (solar)    std::cout << "Solar Eclipse" << std::endl;
-			if (lunar)    std::cout << "Lunar Eclipse" << std::endl;
-		}*/
 		bool move = false;
 		if (solar && action == SOLAR_ECLIPSE)
 		{
@@ -298,8 +286,6 @@ int main()
 		if (solar) 
 		{
 			allShader.setBool("shadowNumber", 1);
-			if(timeGoing)
-			std::cout << "SOLAR_ECLIPSE";
 		}
 		else
 			allShader.setBool("shadowNumber", 0);
@@ -309,8 +295,6 @@ int main()
 		if (lunar) 
 		{
 			allShader.setBool("shadowNumber", 1);
-			if (timeGoing)
-				std::cout << "LUNAR_ECLIPSE";
 		}
 		else
 			allShader.setBool("shadowNumber", 0);

@@ -13,6 +13,15 @@ enum ColorMode
 	TEXTURE,
 	TEXTURE_VECTOR
 };
+/*
+* Note iam using my classes from the previous homework
+* i have commented the Lines that uses PolygonWIthTexture becuse i was 
+* using my own method to do that in the previous homework which requires 
+* someMethods to be on Polygon and PolygonWithTexture because iam using 
+* Polymorphism and making shared pointers 
+* i will fix this in the project but for now i don't have to because iam 
+* using model.h i only need these classes to make the orbit in this homework
+*/
 class Polygon3d {
 public :
 	Polygon3d(std::vector<std::shared_ptr<Polygon>> polygons) {

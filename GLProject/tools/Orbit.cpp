@@ -9,7 +9,13 @@
 
 using namespace std;
 using namespace glm;
-
+/*
+* This is a new class uses Polygon3d
+* i probably should make it extends the Polygon3d instead of using it as Composition
+* but i don't need to because i will discard this class in later projects 
+* this is pretty much only for the solar system homework i won't benefit me in the 
+* final project 
+*/
 class Orbit{
 	
 public:

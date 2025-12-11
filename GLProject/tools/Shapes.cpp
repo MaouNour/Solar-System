@@ -4,6 +4,11 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <vector>
 #include <cmath>
+/*
+*the same class as the previos homework i only add 
+* ellipse which is the shape of the orbit of earth 
+* (looks like an egg)
+*/
 class Shapes {
 public:
 	static std::vector<glm::vec2> squareTexture()
