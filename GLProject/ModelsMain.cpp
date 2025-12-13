@@ -117,7 +117,7 @@ int main()
 	Model moon("./models/Sphere.glb");
 	float r = 4.0f;
 	float translateZ = 1.0f;
-	Orbit earthOrbit(Shapes::makeEllipse(r, 2 * r, 32, glm::vec3(0.0, 0.0, translateZ)), 0.01, 0.01);
+	Orbit earthOrbit(Shapes::makeEllipse(r, 2 * r, 360, glm::vec3(0.0, 0.0, translateZ)), 0.01, 0.01);
 	earthOrbit.setColor(glm::vec3(0.0,0.0,0.3));
 	float DME = 0.4f;
 	Orbit moonOrbit(Shapes::makeCircle(32,DME,vec3(0.0,0.0,1.0)),0.01,0.01);
@@ -311,7 +311,6 @@ int main()
 		lightSourceShader.setMat4("model", sunTransform);
 		glBindTexture(GL_TEXTURE_2D, textures[2]);
 		sun.Draw(lightSourceShader);
-		
 		earthOrbit.draw(lightSourceShader);
 		moonOrbit.draw(lightSourceShader);
 		//LightSource.draw(lightSourceShader);

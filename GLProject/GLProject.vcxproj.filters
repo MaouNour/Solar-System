@@ -27,12 +27,6 @@
     <ClCompile Include="ModelsMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MultilightMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrimitivesMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="tools\Cube.cpp">
       <Filter>Source Files\tools</Filter>
     </ClCompile>
@@ -77,13 +71,10 @@
     <None Include="..\..\..\Sphere.glb">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="LightSource-Texture.fs">
-      <Filter>Source Files\shaders</Filter>
-    </None>
     <None Include="shaders\fs\HW-model.fs">
       <Filter>Source Files\shaders</Filter>
     </None>
-    <None Include="model-blinn.fs">
+    <None Include="shaders\fs\LightSource-Texture.fs">
       <Filter>Source Files\shaders</Filter>
     </None>
   </ItemGroup>

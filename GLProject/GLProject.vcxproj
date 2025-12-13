@@ -130,8 +130,6 @@
   <ItemGroup>
     <ClCompile Include="..\OpenGL.SharedModule\src\glad.c" />
     <ClCompile Include="ModelsMain.cpp" />
-    <ClCompile Include="MultilightMain.cpp" />
-    <ClCompile Include="PrimitivesMain.cpp" />
     <ClCompile Include="tools\Cube.cpp" />
     <ClCompile Include="tools\Helper.cpp" />
     <ClCompile Include="tools\MyPoly.cpp" />
@@ -147,12 +145,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Sphere.glb" />
-    <None Include="LightSource-Texture.fs" />
-    <None Include="model-blinn.fs" />
     <None Include="shaders\fs\HW-model.fs" />
     <None Include="shaders\fs\L5-Model.fs" />
     <None Include="shaders\fs\L5-Multi.fs" />
     <None Include="shaders\fs\L5.fs" />
+    <None Include="shaders\fs\LightSource-Texture.fs" />
     <None Include="shaders\fs\LightSource.fs" />
     <None Include="shaders\vs\L5.vs" />
     <None Include="shaders\vs\LightSource.vs" />

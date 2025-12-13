@@ -26,15 +26,15 @@ C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Shapes
 C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\tools\Shapes.cpp(76,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   (compiling source file 'ModelsMain.cpp')
   
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(120,93): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(120,87): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(120,94): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(120,88): warning C4305: 'argument': truncation from 'double' to 'float'
 C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(123,68): warning C4305: 'argument': truncation from 'double' to 'float'
 C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(123,63): warning C4305: 'argument': truncation from 'double' to 'float'
 C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(198,28): warning C4305: 'initializing': truncation from 'double' to 'float'
 C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(199,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(229,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(274,129): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(274,101): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(274,72): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(233,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(278,129): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(278,101): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\GLProject\ModelsMain.cpp(278,72): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   GLProject.vcxproj -> C:\Users\NourAldeen\Documents\Visual Studio 2022\Lecture5\x64\Debug\Lecture5.exe
